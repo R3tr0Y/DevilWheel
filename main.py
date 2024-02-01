@@ -41,10 +41,11 @@ class Server:
 
                 response = ""
 
-                if message == "/quit":
+                if message == "/quit" or message == "/exit":
+                    writer.write("\nBye.\n".encode())
                     break
                 elif message == "/help":
-                    response = "\nAvailable commands:\n/help - Show this help\n/quit - Quit the session\n/message user - Send a private message to user\n/list - List online users\n/pair  - Pairing user to a game of Russian Roulette\n"
+                    response = "\nAvailable commands:\n/help - Show this help\n/quit - Quit the session\n/message user - Send a private message to user\n/list - List online users\n/pair  - Pair a user to a game of Russian Roulette\n"
                 elif message.startswith("/message"):
                     recipient, msg = message.split(" ", 2)[1:]
                     await self.send_private_message(username, recipient, msg)
@@ -53,6 +54,8 @@ class Server:
                     response = f"\nOnline users: {', '.join(online_users)}\n"
                 elif message == "/pair":
                     response = "\nNot yet...\n"
+                elif message.startswith('/'):
+                    response = "\nCommand false.\n"
                 else:
                     # response = f"You said: {message}\n"
                     if message.strip() != "":
@@ -83,7 +86,7 @@ class Server:
 
     async def main(self):
         server = await asyncio.start_server(
-            self.handle_client, '127.0.0.1', 8888)
+            self.handle_client, '127.0.0.1', 8080)
 
         addr = server.sockets[0].getsockname()
         print(f'Serving on {addr}')
