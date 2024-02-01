@@ -45,7 +45,7 @@ class Server:
                     writer.write("\nBye.\n".encode())
                     break
                 elif message == "/help":
-                    response = "\nAvailable commands:\n/help - Show this help\n/quit - Quit the session\n/message user - Send a private message to user\n/list - List online users\n/pair  - Pair a user to a game of Russian Roulette\n"
+                    response = "\nAvailable commands:\n/help - Show this help\n/quit - Quit the session\n/message user - Send a private message to user\n/list - List online users\n/pair  - Pair a user to a game of Russian Roulette\n\n"
                 elif message.startswith("/message"):
                     recipient, msg = message.split(" ", 2)[1:]
                     await self.send_private_message(username, recipient, msg)
